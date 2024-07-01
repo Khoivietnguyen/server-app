@@ -20,11 +20,13 @@ public class ServerController {
     @GetMapping("/startVpn")
     public String startVpn() {
 //    	return "Starting VPN connection in " + vpnScriptPath;
-        if (startVPNConnection()) {
-            return "VPN connection established.";
-        } else {
-            return "Failed to establish VPN connection.";
-        }
+//        if (startVPNConnection()) {
+//            return "VPN connection established.";
+//        } else {
+//            return "Failed to establish VPN connection.";
+//        }
+    	
+    	return startVPNConnection();
     }
     
     @GetMapping("/pingVpn")
@@ -59,15 +61,18 @@ public class ServerController {
     	return res;
     }
 
-    private boolean startVPNConnection() {
+    private String startVPNConnection() {
+    	String res = "Starting VPN result: ";
         try {
             Process process = new ProcessBuilder("/bin/bash", "-c", vpnScriptPath).start();
             int exitCode = process.waitFor();
-            return exitCode == 0;
+            res = res + exitCode;
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            return false;
+            res = res + e.getMessage();
         }
+        
+        return res;
     }
 }
 
