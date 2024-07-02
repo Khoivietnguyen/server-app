@@ -1,14 +1,13 @@
 package com.example.server;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Value;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ServerController {
@@ -18,13 +17,6 @@ public class ServerController {
 
 	@GetMapping("/startVpn")
 	public String startVpn() {
-//    	return "Starting VPN connection in " + vpnScriptPath;
-//        if (startVPNConnection()) {
-//            return "VPN connection established.";
-//        } else {
-//            return "Failed to establish VPN connection.";
-//        }
-
 		return startVPNConnection();
 	}
 
@@ -52,8 +44,7 @@ public class ServerController {
 			address = InetAddress.getByName("10.8.0.1");
 			boolean reachable = address.isReachable(10000);
 			res = res + "Reachable VPN gateway at 10.8.0.1:" + reachable;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {			
 			e.printStackTrace();
 		}
 
@@ -77,7 +68,7 @@ public class ServerController {
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 			res = res + e.getMessage();
-		}		
+		}
 		return res;
 	}
 
@@ -91,7 +82,12 @@ public class ServerController {
 				res = res + s;
 			}
 			int exitCode = process.waitFor();
-			res = res + exitCode;
+			if (exitCode == 0) {
+				res = res + "OK!";
+			} else {
+				res = res + "FAILED!";
+			}
+			
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 			res = res + e.getMessage();
