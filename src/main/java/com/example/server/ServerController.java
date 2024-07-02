@@ -73,11 +73,11 @@ public class ServerController {
 			}
 			int exitCode = process.waitFor();
 			res = res + exitCode;
+			Thread.sleep(500);
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 			res = res + e.getMessage();
-		}
-
+		}		
 		return res;
 	}
 
