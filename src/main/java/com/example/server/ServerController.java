@@ -64,7 +64,7 @@ public class ServerController {
     private String startVPNConnection() {
     	String res = "Starting VPN result: ";
         try {
-            Process process = new ProcessBuilder("/bin/sh", "su", "root", "-c", "/script/startup.sh").start();
+            Process process = new ProcessBuilder("/bin/sh", "su root -c", "/script/startup.sh").start();
             //ProcessBuilder pb = new ProcessBuilder("/bin/sh", "-c", "/script/startup.sh");
 //        	Process process = new ProcessBuilder(vpnScriptPath).start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(
