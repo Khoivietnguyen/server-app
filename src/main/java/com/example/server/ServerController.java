@@ -51,7 +51,7 @@ public class ServerController {
 		try {
 			address = InetAddress.getByName("10.8.0.1");
 			boolean reachable = address.isReachable(10000);
-			res = res + " reachable VPN host:" + reachable;
+			res = res + "Reachable VPN gateway at 10.8.0.1:" + reachable;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
