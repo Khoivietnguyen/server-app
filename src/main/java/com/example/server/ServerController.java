@@ -87,7 +87,14 @@ public class ServerController {
     	String res = "Starting VPN result: ";
     	try {
     		Process process = new ProcessBuilder("/bin/sh", "-c", "chmod -R 777 /var/log/openvpn").start();
+    		 BufferedReader reader = new BufferedReader(new InputStreamReader(
+                     process.getInputStream()));
+                 String s;
+                 while ((s = reader.readLine()) != null) {
+                   res = res + s;
+                 }
     		int exitCode = process.waitFor();
+    		res += "Assiging log permission:" + exitCode;
     	}
     	catch (Exception e) {
            
