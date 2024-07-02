@@ -60,6 +60,28 @@ public class ServerController {
                
     	return res;
     }
+    
+    @GetMapping("/stopVpn")
+    public String stopVpn() {
+    	String res = "Stopping VPN result: ";
+    	
+    	 try {
+             Process process = new ProcessBuilder("/bin/sh", "-c", "pkill openvpn").start();           
+             BufferedReader reader = new BufferedReader(new InputStreamReader(
+                     process.getInputStream()));
+                 String s;
+                 while ((s = reader.readLine()) != null) {
+                   res = res + s;
+                 }
+             int exitCode = process.waitFor();
+             res = res + exitCode;
+         } catch (IOException | InterruptedException e) {
+             e.printStackTrace();
+             res = res + e.getMessage();
+         }
+    	
+    	return res;
+    }
 
     private String startVPNConnection() {
     	String res = "Starting VPN result: ";
