@@ -63,11 +63,17 @@ public class ServerController {
 				res = res + s;
 			}
 			int exitCode = process.waitFor();
-			res = res + exitCode;
-			Thread.sleep(500);
+			res = res + exitCode;			
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 			res = res + e.getMessage();
+		}
+		
+		try {
+			Thread.sleep(500);
+			Process process = new ProcessBuilder("/bin/sh", "-c", "chmod -R 777 /var/log/openvpn").start();
+		} catch (Exception e) {			
+			e.printStackTrace();
 		}
 		return res;
 	}
